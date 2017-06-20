@@ -1,0 +1,66 @@
+[[define "lcq"]]
+
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>[[.title]]</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+    <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css" type="text/css" />
+    </head>
+    <body>
+        [[.content]]<br/>
+        <button type="button" class="am-btn am-btn-primary" data-am-button>amazeui-css</button>
+	<br/>
+	<div	id="app">
+		{{message}}<br/>
+		<input type="text" v-model="message"/>
+    <br/>
+        <input type="submit" value="login" v-on:click="sub"/>
+    </div>
+    <br/>
+    <form action="/login" method="post" id="login_form">
+        <input name="_csrf" type="hidden" value="[[.csrf]]">
+        <input type="submit" value="login"/>
+    </form>  
+    </body>
+    <script src="/public/js/vue.js"></script>
+    <script src="/public/js/jquery.js"></script>
+    <script src="/public/js/vendor/require.js"></script>
+    <script src="/public/js/require_config.js"></script>
+    <script>
+	var exampleData={
+		message:'hello lcq77'
+	}
+	new Vue({
+		el:'#app',
+		data:exampleData,
+        methods:{
+            sub: function(){
+
+
+                    alert("ajax")
+                    //$.post("/login",{"_csrf":[[.csrf]]},function(data){  },"json");  
+					$.ajax({
+						  type: 'POST',
+						  url: '/login',
+						  processData: false,	
+						  contentType: false,
+                          data: new FormData(document.getElementById('login_form')),
+						  
+						  success: function(result) {
+                              alert("suc")
+						  },
+						  error: function(result){
+                              alert("err")
+                          }, 
+					  })
+                 
+
+            }
+        }
+	})
+    </script>
+</html>
+
+[[end]]
